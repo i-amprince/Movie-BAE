@@ -93,9 +93,9 @@ const Navbar = () => {
           <div className="mobile-menu-content">
             <Link to="/" className="mobile-nav-link">Home</Link>
             <Link to="/movies" className="mobile-nav-link">Movies</Link>
-            <a href="#" className="mobile-nav-link">Theaters</a>
-            <a href="#" className="mobile-nav-link">Events</a>
-            <a href="#" className="mobile-nav-link">Offers</a>
+            {user && (
+              <Link to="/mybookings" className="mobile-nav-link">My Bookings</Link>
+            )}
             {user ? (
               <button className="mobile-sign-in-btn" onClick={handleLogout}>Logout</button>
             ) : (

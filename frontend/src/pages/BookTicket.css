@@ -937,8 +937,17 @@
     gap: 1.5rem;
   }
   
+  .seat-grid-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 1rem;
+    margin-left: -1rem;
+    margin-right: -1rem;
+  }
   .seat-grid {
-    padding: 1.5rem;
+    display: inline-block;
+    min-width: 350px;
+    max-width: unset;
   }
   
   .seat {
