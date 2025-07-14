@@ -11,9 +11,18 @@ const Navbar = () => {
 
   const toggleMenu = () => setIsMenuOpen((open) => !open);
 
+  // Close mobile menu
+  const closeMobileMenu = () => setIsMenuOpen(false);
+
   const handleLogout = () => {
     logout();
     navigate('/');
+    closeMobileMenu(); // Close menu after logout
+  };
+
+  const handleMobileNavigation = (path) => {
+    navigate(path);
+    closeMobileMenu(); // Close menu after navigation
   };
 
   return (
@@ -91,15 +100,15 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="mobile-menu">
           <div className="mobile-menu-content">
-            <Link to="/" className="mobile-nav-link">Home</Link>
-            <Link to="/movies" className="mobile-nav-link">Movies</Link>
+            <Link to="/" className="mobile-nav-link" onClick={closeMobileMenu}>Home</Link>
+            <Link to="/movies" className="mobile-nav-link" onClick={closeMobileMenu}>Movies</Link>
             {user && (
-              <Link to="/mybookings" className="mobile-nav-link">My Bookings</Link>
+              <Link to="/mybookings" className="mobile-nav-link" onClick={closeMobileMenu}>My Bookings</Link>
             )}
             {user ? (
               <button className="mobile-sign-in-btn" onClick={handleLogout}>Logout</button>
             ) : (
-              <button className="mobile-sign-in-btn" onClick={() => navigate('/signin')}>Sign In</button>
+              <button className="mobile-sign-in-btn" onClick={() => handleMobileNavigation('/signin')}>Sign In</button>
             )}
           </div>
         </div>
@@ -108,4 +117,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar; 
+export default Navbar;
