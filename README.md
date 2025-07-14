@@ -47,7 +47,7 @@ MOVIE_BAE/
 
 ### 1. Clone the repository
 ```bash
-git clone <repo-url>
+git clone <https://github.com/i-amprince/Movie-Bae>
 cd MOVIE_BAE
 ```
 
