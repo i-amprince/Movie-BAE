@@ -1,4 +1,4 @@
-# MOVIE_BAE
+# MOVIE_BAE - (https://movie-bae-frontend.vercel.app/)
 
 A full-stack movie ticket booking platform with real-time seat selection, user authentication (Google OAuth), admin analytics dashboard, and modern UI/UX. Built with React (frontend) and Node.js/Express/MongoDB along with socket.io (backend).
 
@@ -170,3 +170,43 @@ MIT
 
 ## Contributing
 Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change. 
+
+---
+
+## Local Development: API URLs & Environment Variables
+
+**After recent updates, API and socket URLs in the frontend are now dynamic and use the `REACT_APP_API_URL` environment variable.**
+
+### 1. Set Up Environment Variable for Localhost
+
+In `frontend/.env` (create if it doesn't exist):
+```
+REACT_APP_API_URL=http://localhost:5000/api
+```
+- This ensures all API and socket requests from the React app go to your local backend.
+
+### 2. Files Using the API URL
+The following frontend files use the API URL dynamically:
+- `src/socket.js`
+- `src/pages/BookTicket.js`
+- `src/pages/MovieDetails.js`
+- `src/pages/MyBooking.js`
+- `src/pages/UserProfile.js`
+- `src/pages/MoviesPage.js`
+- `src/pages/SignIn.js`
+- `src/pages/MovieBookingLanding.js`
+- `src/pages/admin/AdminMovies.js`
+- `src/pages/admin/AdminShows.js`
+- `src/pages/admin/AdminLogin.js`
+- `src/pages/admin/AdminDashboardHome.js`
+
+**No manual code changes are needed for local/production switching—just set the correct `REACT_APP_API_URL` in your `.env` file.**
+
+### 3. Google OAuth (Sign In)
+- Make sure your Google Cloud Console OAuth credentials have `http://localhost:3000` in the **Authorized JavaScript origins** for local development.
+- For production, added the deployed frontend URL (e.g., `https://movie-bae-frontend.vercel.app`).
+
+### 4. Backend
+- The backend does not require changes for local/production switching, as long as the frontend points to the correct API URL.
+
+--- 
