@@ -51,6 +51,36 @@ const statValue = {
 
 const COLORS = ['#60a5fa', '#a855f7', '#f59e42', '#10b981', '#ef4444', '#6366f1'];
 
+// Custom tooltip for better user experience
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div style={{
+        backgroundColor: '#fff',
+        border: '1px solid #e5e7eb',
+        borderRadius: '8px',
+        padding: '12px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+        fontSize: '12px'
+      }}>
+        <p style={{ margin: 0, fontWeight: 'bold', color: '#374151' }}>
+          {payload[0].payload.fullName || payload[0].payload.name}
+        </p>
+        <p style={{ margin: '4px 0 0 0', color: '#60a5fa' }}>
+          Revenue: ₹{payload[0].value?.toLocaleString()}
+        </p>
+      </div>
+    );
+  }
+  return null;
+};
+
+// Function to truncate long movie titles
+const truncateTitle = (title, maxLength = 15) => {
+  if (title.length <= maxLength) return title;
+  return title.substring(0, maxLength) + '...';
+};
+
 const AdminDashboardHome = () => {
   const { admin } = useContext(AdminAuthContext);
   const [stats, setStats] = useState({
@@ -204,15 +234,31 @@ const AdminDashboardHome = () => {
       <div className="dashboard-charts-row">
         <div className="dashboard-chart-card">
           <h3>Revenue by Movie</h3>
-          <ResponsiveContainer width="100%" height={260}>
+          <p style={{ fontSize: '14px', color: '#64748b', marginBottom: '16px' }}>
+            Hover over chart segments to see movie details
+          </p>
+          <ResponsiveContainer width="100%" height={280}>
             <PieChart>
-              <Pie data={charts.revenueByMovie.map(rm => ({ name: rm.movie?.title || 'N/A', value: rm.revenue }))} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={90} label>
+              <Pie 
+                data={charts.revenueByMovie.map(rm => ({ 
+                  name: truncateTitle(rm.movie?.title || 'N/A'), 
+                  value: rm.revenue,
+                  fullName: rm.movie?.title || 'N/A' 
+                }))} 
+                dataKey="value" 
+                nameKey="name" 
+                cx="50%" 
+                cy="50%" 
+                outerRadius={100}
+                label={false}
+                stroke="#fff"
+                strokeWidth={2}
+              >
                 {charts.revenueByMovie.map((entry, idx) => (
                   <Cell key={`cell-${idx}`} fill={COLORS[idx % COLORS.length]} />
                 ))}
               </Pie>
-              <Tooltip />
-              <Legend />
+              <Tooltip content={<CustomTooltip />} />
             </PieChart>
           </ResponsiveContainer>
         </div>
@@ -233,4 +279,4 @@ const AdminDashboardHome = () => {
   );
 };
 
-export default AdminDashboardHome; 
+export default AdminDashboardHome;
