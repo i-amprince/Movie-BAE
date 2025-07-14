@@ -17,7 +17,8 @@ const MoviesPage = () => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/movies');
+        const apiUrl = process.env.REACT_APP_API_URL || 'https://movie-bae-backend.onrender.com/api';
+        const response = await fetch(`${apiUrl}/movies`);
         if (!response.ok) throw new Error('Failed to fetch movies');
         const data = await response.json();
         setMovies(data);

@@ -42,12 +42,16 @@ const BookTicket = () => {
   const [lockedSeats, setLockedSeats] = useState({}); // { seat: lockedBy }
   const socketRef = React.useRef(null);
 
-  const socket = io('http://localhost:5000');
+  const backendUrl = process.env.REACT_APP_API_URL || 'https://movie-bae-backend.onrender.com/api';
+  const apiUrl = backendUrl;
+  const socketBaseUrl = backendUrl.replace(/\/api$/, '');
+
+  const socket = io(socketBaseUrl);
 
   // Fetch available shows for this movie
   useEffect(() => {
     const fetchShows = async () => {
-      const res = await fetch(`http://localhost:5000/api/shows?movieId=${movieId}`);
+      const res = await fetch(`${apiUrl}/shows?movieId=${movieId}`);
       if (res.ok) {
         const data = await res.json();
         setShows(data.filter(show => show.movieId && show.movieId._id === movieId));
@@ -67,7 +71,7 @@ const BookTicket = () => {
   useEffect(() => {
     // Fetch movie details for display
     const fetchMovie = async () => {
-      const res = await fetch(`http://localhost:5000/api/movies/${movieId}`);
+      const res = await fetch(`${apiUrl}/movies/${movieId}`);
       if (res.ok) setMovie(await res.json());
     };
     fetchMovie();
@@ -76,7 +80,7 @@ const BookTicket = () => {
   // Fetch booked seats for the current movie, region, and time
   const fetchBookedSeats = async () => {
     if (!region || !time) return;
-    const res = await fetch(`http://localhost:5000/api/bookings/seats?movieId=${movieId}&region=${region}&time=${encodeURIComponent(time)}`);
+    const res = await fetch(`${apiUrl}/bookings/seats?movieId=${movieId}&region=${region}&time=${encodeURIComponent(time)}`);
     if (res.ok) {
       const data = await res.json();
       setBookedSeats(data.bookedSeats);
@@ -90,7 +94,7 @@ const BookTicket = () => {
 
   useEffect(() => {
     // Connect to socket.io server
-    socketRef.current = io('http://localhost:5000');
+    socketRef.current = io(socketBaseUrl);
     const socket = socketRef.current;
 
     // Listen for seat lock events
@@ -180,7 +184,7 @@ const BookTicket = () => {
     // Book all selected seats (one request per seat)
     let allSuccess = true;
     for (const seat of selectedSeats) {
-      const res = await fetch('http://localhost:5000/api/bookings', {
+      const res = await fetch(`${apiUrl}/bookings`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

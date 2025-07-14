@@ -16,7 +16,8 @@ const AdminLogin = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('http://localhost:5000/api/admin/login', {
+      const apiUrl = process.env.REACT_APP_API_URL || 'https://movie-bae-backend.onrender.com/api';
+      const res = await fetch(`${apiUrl}/admin/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })

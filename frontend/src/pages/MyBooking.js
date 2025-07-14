@@ -33,7 +33,8 @@ const MyBooking = () => {
     if (!user) return;
     const fetchBookings = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/bookings?userEmail=${encodeURIComponent(user.email)}`);
+        const apiUrl = process.env.REACT_APP_API_URL || 'https://movie-bae-backend.onrender.com/api';
+        const res = await fetch(`${apiUrl}/bookings?userEmail=${encodeURIComponent(user.email)}`);
         if (!res.ok) throw new Error('Failed to fetch bookings');
         const data = await res.json();
         setBookings(data);
@@ -57,7 +58,8 @@ const MyBooking = () => {
     if (!window.confirm('Are you sure you want to cancel this ticket?')) return;
     setCancelling(bookingId);
     try {
-      const res = await fetch(`http://localhost:5000/api/bookings/${bookingId}`, { method: 'DELETE' });
+      const apiUrl = process.env.REACT_APP_API_URL || 'https://movie-bae-backend.onrender.com/api';
+      const res = await fetch(`${apiUrl}/bookings/${bookingId}`, { method: 'DELETE' });
       if (!res.ok) throw new Error('Failed to cancel ticket');
       setBookings(prev => prev.filter(b => b._id !== bookingId));
       toast.success('Ticket cancelled');

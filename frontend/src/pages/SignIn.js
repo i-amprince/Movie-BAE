@@ -22,7 +22,8 @@ const SignIn = () => {
         token: credentialResponse.credential
       });
       // Upsert user in backend
-      fetch('http://localhost:5000/api/users/google', {
+      const apiUrl = process.env.REACT_APP_API_URL || 'https://movie-bae-backend.onrender.com/api';
+      fetch(`${apiUrl}/users/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

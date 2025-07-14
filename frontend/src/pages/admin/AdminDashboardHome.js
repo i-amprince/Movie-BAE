@@ -101,23 +101,24 @@ const AdminDashboardHome = () => {
   useEffect(() => {
     const fetchStats = async () => {
       const headers = { Authorization: `Bearer ${admin.token}` };
+      const apiUrl = process.env.REACT_APP_API_URL || 'https://movie-bae-backend.onrender.com/api';
       // Bookings
-      const bookingsRes = await fetch('http://localhost:5000/api/admin/analytics/total-bookings', { headers });
+      const bookingsRes = await fetch(`${apiUrl}/admin/analytics/total-bookings`, { headers });
       const bookingsData = await bookingsRes.json();
       // Revenue
-      const revenueRes = await fetch('http://localhost:5000/api/admin/analytics/total-revenue', { headers });
+      const revenueRes = await fetch(`${apiUrl}/admin/analytics/total-revenue`, { headers });
       const revenueData = await revenueRes.json();
       // Users
-      const usersRes = await fetch('http://localhost:5000/api/admin/analytics/total-users', { headers });
+      const usersRes = await fetch(`${apiUrl}/admin/analytics/total-users`, { headers });
       const usersData = await usersRes.json();
       // Movies running
-      const runningRes = await fetch('http://localhost:5000/api/admin/analytics/movies-running', { headers });
+      const runningRes = await fetch(`${apiUrl}/admin/analytics/movies-running`, { headers });
       const runningData = await runningRes.json();
       // Most booked movie
-      const mostBookedRes = await fetch('http://localhost:5000/api/admin/analytics/most-booked-movie', { headers });
+      const mostBookedRes = await fetch(`${apiUrl}/admin/analytics/most-booked-movie`, { headers });
       const mostBookedData = await mostBookedRes.json();
       // Top city
-      const topCityRes = await fetch('http://localhost:5000/api/admin/analytics/top-city', { headers });
+      const topCityRes = await fetch(`${apiUrl}/admin/analytics/top-city`, { headers });
       const topCityData = await topCityRes.json();
       setStats({
         bookings: bookingsData.totalBookings ?? 0,
@@ -130,17 +131,18 @@ const AdminDashboardHome = () => {
     };
     const fetchCharts = async () => {
       const headers = { Authorization: `Bearer ${admin.token}` };
+      const apiUrl = process.env.REACT_APP_API_URL || 'https://movie-bae-backend.onrender.com/api';
       // Bookings over time
-      const bookingsTimeRes = await fetch('http://localhost:5000/api/admin/analytics/bookings-over-time', { headers });
+      const bookingsTimeRes = await fetch(`${apiUrl}/admin/analytics/bookings-over-time`, { headers });
       const bookingsTimeData = await bookingsTimeRes.json();
       // Top movies
-      const topMoviesRes = await fetch('http://localhost:5000/api/admin/analytics/top-movies', { headers });
+      const topMoviesRes = await fetch(`${apiUrl}/admin/analytics/top-movies`, { headers });
       const topMoviesData = await topMoviesRes.json();
       // Revenue by movie
-      const revenueMovieRes = await fetch('http://localhost:5000/api/admin/analytics/revenue-by-movie', { headers });
+      const revenueMovieRes = await fetch(`${apiUrl}/admin/analytics/revenue-by-movie`, { headers });
       const revenueMovieData = await revenueMovieRes.json();
       // User growth
-      const userGrowthRes = await fetch('http://localhost:5000/api/admin/analytics/user-growth', { headers });
+      const userGrowthRes = await fetch(`${apiUrl}/admin/analytics/user-growth`, { headers });
       const userGrowthData = await userGrowthRes.json();
       setCharts({
         bookingsOverTime: bookingsTimeData.bookingsOverTime || [],

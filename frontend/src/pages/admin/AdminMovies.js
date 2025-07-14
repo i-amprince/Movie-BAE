@@ -25,11 +25,13 @@ const AdminMovies = () => {
   const [editingId, setEditingId] = useState(null);
   const [submitting, setSubmitting] = useState(false);
 
+  const apiUrl = process.env.REACT_APP_API_URL || 'https://movie-bae-backend.onrender.com/api';
+
   const fetchMovies = async () => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('http://localhost:5000/api/movies');
+      const res = await fetch(`${apiUrl}/movies`);
       const data = await res.json();
       if (res.ok) {
         setMovies(data);
@@ -76,8 +78,8 @@ const AdminMovies = () => {
     try {
       const res = await fetch(
         editingId 
-          ? `http://localhost:5000/api/movies/${editingId}` 
-          : 'http://localhost:5000/api/movies',
+          ? `${apiUrl}/movies/${editingId}` 
+          : `${apiUrl}/movies`,
         {
           method: editingId ? 'PUT' : 'POST',
           headers: {
@@ -122,7 +124,7 @@ const AdminMovies = () => {
     setError('');
 
     try {
-      const res = await fetch(`http://localhost:5000/api/movies/${id}`, {
+      const res = await fetch(`${apiUrl}/movies/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${admin.token}`

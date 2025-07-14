@@ -15,7 +15,8 @@ const MovieBookingLanding = () => {
   useEffect(() => {
     const fetchMostBookedMovie = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/admin/analytics/most-booked-movie', {
+        const apiUrl = process.env.REACT_APP_API_URL || 'https://movie-bae-backend.onrender.com/api';
+        const res = await fetch(`${apiUrl}/admin/analytics/most-booked-movie`, {
           headers: {
             // No auth required for this endpoint on landing
           }

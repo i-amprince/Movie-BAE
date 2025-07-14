@@ -248,7 +248,8 @@ const UserProfile = () => {
     if (!user) return;
     const fetchBookings = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/bookings?userEmail=${encodeURIComponent(user.email)}`);
+        const apiUrl = process.env.REACT_APP_API_URL || 'https://movie-bae-backend.onrender.com/api';
+        const res = await fetch(`${apiUrl}/bookings?userEmail=${encodeURIComponent(user.email)}`);
         if (!res.ok) throw new Error('Failed to fetch bookings');
         const data = await res.json();
         setBookings(data);
