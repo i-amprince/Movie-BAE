@@ -67,7 +67,7 @@ app.use('/api/shows', showsRouter);
 app.use('/api/users', usersRouter);
 
 // MongoDB connection
-mongoose.connect('mongodb+srv://princeg1608:huihui@moviebooking.7jngplb.mongodb.net/?retryWrites=true&w=majority&appName=MovieBooking', {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
