@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './MovieDetails.css';
+import './MovieDetails.css'; // This now safely imports the unique styles
 
 const getYouTubeEmbedUrl = (url) => {
   if (!url) return '';
@@ -32,72 +32,72 @@ const MovieDetails = () => {
     fetchMovie();
   }, [id]);
 
-  if (loading) return <div className="loading-state">Loading...</div>;
-  if (error) return <div className="error-state">Error: {error}</div>;
-  if (!movie) return <div className="not-found-state">Movie not found.</div>;
+  if (loading) return <div className="movie-details-page-loading-state">Loading...</div>;
+  if (error) return <div className="movie-details-page-error-state">Error: {error}</div>;
+  if (!movie) return <div className="movie-details-page-not-found-state">Movie not found.</div>;
 
   const containerStyle = {
     backgroundImage: `url(${movie.poster})`
   };
 
   return (
-    <div className="movie-details-container" style={containerStyle}>
+    <div className="movie-details-page-container" style={containerStyle}>
       <button
-        className="back-button"
+        className="movie-details-page-back-button"
         onClick={() => navigate(-1)}
       >
         ← Back
       </button>
       
-      <main className="main-content">
-        <div className="content-layout">
-          <div className="movie-info-section">
-            <h1 className="movie-title">{movie.title}</h1>
-            <p className="movie-description">{movie.description}</p>
+      <main className="movie-details-page-main-content">
+        <div className="movie-details-page-content-layout">
+          <div className="movie-details-page-info-section">
+            <h1 className="movie-details-page-title">{movie.title}</h1>
+            <p className="movie-details-page-description">{movie.description}</p>
             
-            <div className="movie-metadata">
-              <span className="metadata-item genre">{movie.genre}</span>
-              <span className="metadata-item rating">{movie.rating}</span>
-              <span className="metadata-item">{movie.duration}</span>
-              <span className="metadata-item">{movie.year}</span>
+            <div className="movie-details-page-metadata">
+              <span className="movie-details-page-metadata-item genre">{movie.genre}</span>
+              <span className="movie-details-page-metadata-item rating">{movie.rating}</span>
+              <span className="movie-details-page-metadata-item">{movie.duration}</span>
+              <span className="movie-details-page-metadata-item">{movie.year}</span>
               
               {movie.imdbScore && (
-                <span className="imdb-badge">
-                  <span className="imdb-logo">IMDb</span>
-                  <span className="imdb-score">{movie.imdbScore}</span>
-                  <svg className="imdb-star" viewBox="0 0 24 24">
+                <span className="movie-details-page-imdb-badge">
+                  <span className="movie-details-page-imdb-logo">IMDb</span>
+                  <span className="movie-details-page-imdb-score">{movie.imdbScore}</span>
+                  <svg className="movie-details-page-imdb-star" viewBox="0 0 24 24">
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                   </svg>
-                  <span className="imdb-total">/10</span>
+                  <span className="movie-details-page-imdb-total">/10</span>
                 </span>
               )}
               
-              <span className="metadata-item price">₹{movie.fare}</span>
+              <span className="movie-details-page-metadata-item price">₹{movie.fare}</span>
             </div>
             
-            <div className="cast-section">
-              <h3 className="cast-title">Casts:</h3>
-              <div className="cast-list">
+            <div className="movie-details-page-cast-section">
+              <h3 className="movie-details-page-cast-title">Casts:</h3>
+              <div className="movie-details-page-cast-list">
                 {movie.casts && movie.casts.map((cast, idx) => (
-                  <span key={idx} className="cast-member">{cast}</span>
+                  <span key={idx} className="movie-details-page-cast-member">{cast}</span>
                 ))}
               </div>
             </div>
             
             <button
-              className="book-ticket-button"
+              className="movie-details-page-book-ticket-button"
               onClick={() => navigate(`/book/${id}`)}
             >
               Book Ticket
             </button>
           </div>
           
-          <div className="trailer-section">
-            <h2 className="trailer-title">Trailer</h2>
+          <div className="movie-details-page-trailer-section">
+            <h2 className="movie-details-page-trailer-title">Trailer</h2>
             {movie.trailerUrl && (
-              <div className="trailer-container">
+              <div className="movie-details-page-trailer-container">
                 <iframe
-                  className="trailer-iframe"
+                  className="movie-details-page-trailer-iframe"
                   src={getYouTubeEmbedUrl(movie.trailerUrl)}
                   title="Movie Trailer"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
